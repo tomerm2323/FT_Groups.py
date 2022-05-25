@@ -1,0 +1,36 @@
+CREATE TABLE  IF NOT exists FT_Groups(
+ FT VARCHAR(200) NOT NULL,
+ costH NUMERIC NOT NULL,
+ Gname VARCHAR(100) NOT NULL,
+ PRIMARY KEY (FT)
+);
+
+CREATE TABLE  IF NOT exists Pod(
+ pod_id  int(24) NOT NULL,
+ pod_name VARCHAR(200),
+ creation_TS float  NOT NULL,
+ creation_Date DATETIME(5) NOT NULL,
+ CPU_limit dec(64,30),
+ memory_limit dec(64,30) ,
+ CPU_request dec(64,30) NOT NULL,
+ memory_request dec(64,30) NOT NULL,
+ AWS_FT varchar(100),
+ PRIMARY KEY (pod_id),
+ FOREIGN KEY(AWS_FT) REFERENCES FT_Groups (FT)   ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT exists PodUsage(
+ sampel_TS float NOT NULL,
+ sampel_date DATETIME (5) NOT NULL,
+ cpu dec(64,30) NOT NULL,
+ memory dec(64,30) NOT NULL,
+ PRIMARY KEY (sampel_TS)
+);
+
+CREATE TABLE  IF NOT exists Residuals(
+ sampel_TS float(5) NOT NULL,
+ sampel_date DATETIME (5) NOT NULL,
+cpu_error dec(64,30) NOT NULL,
+memory_error dec(64,30) NOT NULL,
+PRIMARY KEY (sampel_TS)
+);
